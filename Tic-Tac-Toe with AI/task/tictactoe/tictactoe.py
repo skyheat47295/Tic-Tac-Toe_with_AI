@@ -2,8 +2,8 @@ class TicTacToe:
 
     def __init__(self):
         self.valid_cells = 'XO_'
-        # Set board Array
         self.keyboard_input = ''
+        # Set board Array
         self.ttt_board = [[f'not_used_{x}:{y}' if x == 0 or y == 0 else None for y in range(4)] for x in range(4)]
 
     @staticmethod
@@ -23,11 +23,11 @@ class TicTacToe:
         return False
 
     def populate_coordinates(self):
-        for character_position in range(len(self.keyboard_input)):
-            for y in range(3, 0, -1):
-                for x in range(1, 4):
-                    self.ttt_board[x][y] = self.keyboard_input[character_position]
-        print(self.ttt_board)
+        character_position = 0
+        for y in range(3, 0, -1):
+            for x in range(1, 4):
+                self.ttt_board[x][y] = self.keyboard_input[character_position]
+                character_position += 1
 
     def get_coordinates(self):
         self.keyboard_input = 'None'
@@ -36,10 +36,17 @@ class TicTacToe:
         self.populate_coordinates()
 
     def display_board(self):
-        pass
+        print('---------')
+        for y in range(3, 0, -1):
+            print('| ', end='')
+            for x in range(1, 4):
+                print(f'{self.ttt_board[x][y]} ', end='')
+            print('|')
+        print('---------')
 
     def main(self):
         self.get_coordinates()
+        self.display_board()
 
 
 tic_tac_toe = TicTacToe()
