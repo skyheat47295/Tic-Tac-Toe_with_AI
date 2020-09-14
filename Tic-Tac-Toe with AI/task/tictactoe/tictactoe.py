@@ -22,6 +22,23 @@ class TicTacToe:
             return True
         return False
 
+    def move_validation(self):
+        if self.keyboard_input == 'None':
+            return False
+        if 1 < (len(self.keyboard_input)) < 4:
+            if (len(self.keyboard_input)) == 3 and self.keyboard_input[1] == ' ':
+                self.keyboard_input = self.keyboard_input[0] + self.keyboard_input[2]
+            if self.keyboard_input[0] in '123' and self.keyboard_input[1] in '123':
+                if self.ttt_board[int(self.keyboard_input[0])][int(self.keyboard_input[1])] in 'XO':
+                    print('This cell is occupied! Choose another one!')
+                    return False
+                return True
+        if not str.isdigit(self.keyboard_input):
+            print('You should enter numbers!')
+            return False
+        print('Coordinates should be from 1 to 3!')
+        return False
+
     def populate_coordinates(self):
         character_position = 0
         for y in range(3, 0, -1):
@@ -44,8 +61,33 @@ class TicTacToe:
             print('|')
         print('---------')
 
+    def get_move(self):
+        self.keyboard_input = 'None'
+        while not self.move_validation():
+            self.keyboard_input = self.get_action('Enter the coordinates: >')
+        self.ttt_board[int(self.keyboard_input[0])][int(self.keyboard_input[1])] = self.who_moves()
+
+    def who_moves(self):
+        x_char = 0
+        o_char = 0
+        for y in range(3, 0, -1):
+            for x in range(1, 4):
+                if self.ttt_board[x][y] == 'X':
+                    x_char += 1
+                elif self.ttt_board[x][y] == 'O':
+                    o_char += 1
+        if x_char <= o_char:
+            return 'X'
+        else:
+            return 'O'
+
+    def determine_state(self):
+        pass
+
     def main(self):
         self.get_coordinates()
+        self.display_board()
+        self.get_move()
         self.display_board()
 
 
