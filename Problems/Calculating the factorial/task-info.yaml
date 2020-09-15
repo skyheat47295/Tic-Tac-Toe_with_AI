@@ -1,0 +1,20 @@
+type: code
+files:
+- name: main.py
+  visible: true
+  text: |-
+    # place `import` statement at top of the program
+
+
+    # don't modify this code or variable `x` may not be available
+    x = int(input())
+
+    # use factorial() here
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/6022
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/6022">JetBrains
+    Academy</a></html>
+  time: Tue, 15 Sep 2020 04:12:05 UTC
+record: -1
