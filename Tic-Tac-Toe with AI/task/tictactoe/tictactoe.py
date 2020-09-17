@@ -1,10 +1,14 @@
+from random import randint
+
+
 class TicTacToe:
 
     def __init__(self):
         self.valid_cells = 'XO_'
         self.keyboard_input = ''
+        self.level = 'easy'
         # Set board Array
-        self.ttt_board = [[f'not.used.{x}:{y}' if x == 0 or y == 0 else None for y in range(4)] for x in range(4)]
+        self.ttt_board = [[f'not.used.{x}:{y}' if x == 0 or y == 0 else ' ' for y in range(4)] for x in range(4)]
 
     @staticmethod
     def get_action(prompt):
@@ -85,34 +89,46 @@ class TicTacToe:
         for x_or_o in 'XO':
             for x in range(1, 4):
                 if self.ttt_board[x][1] == x_or_o and self.ttt_board[x][2] == x_or_o and self.ttt_board[x][3] == x_or_o:
-                    print(f'{x_or_o} wins')
-                    return
+                    return f'{x_or_o} wins'
         for x_or_o in 'XO':
             for y in range(1, 4):
                 if self.ttt_board[1][y] == x_or_o and self.ttt_board[2][y] == x_or_o and self.ttt_board[3][y] == x_or_o:
-                    print(f'{x_or_o} wins')
-                    return
+                    return f'{x_or_o} wins'
         for x_or_o in 'XO':
             if self.ttt_board[1][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[3][3] == x_or_o:
-                print(f'{x_or_o} wins')
-                return
+                return f'{x_or_o} wins'
         for x_or_o in 'XO':
             if self.ttt_board[3][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[1][3] == x_or_o:
-                print(f'{x_or_o} wins')
-                return
+                return f'{x_or_o} wins'
         for x in range(1, 4):
             for y in range(1, 4):
-                if '_' in self.ttt_board[x][y]:
-                    print('Game not finished')
-                    return
+                if ' ' in self.ttt_board[x][y]:
+                    return 'Game not finished'
+
         print('Draw')
 
+    def make_move(self):
+        print(f'Making move level "{self.level}"')
+        x = 0
+        y = 0
+        if self.level == 'easy':
+            self.keyboard_input = 'None'
+            while not self.move_validation():
+                x = randint(1, 3)
+                y = randint(1, 3)
+                self.keyboard_input = str(x) + str(y)
+            self.ttt_board[x][y] = self.who_moves()
+
     def main(self):
-        self.get_coordinates()
         self.display_board()
         self.get_move()
         self.display_board()
-        self.determine_state()
+        while self.determine_state() == 'Game not finished':
+            self.make_move()
+            self.display_board()
+            self.get_move()
+            self.display_board()
+        print(self.determine_state())
 
 
 tic_tac_toe = TicTacToe()
