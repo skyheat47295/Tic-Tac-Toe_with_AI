@@ -3,12 +3,19 @@ from random import randint
 
 class TicTacToe:
 
+    users = ['user', 'easy']
+
     def __init__(self):
         self.valid_cells = 'XO_'
         self.keyboard_input = ''
         self.level = 'easy'
-        # Set board Array
+        self.player_x = ''
+        self.player_o = ''
         self.ttt_board = [[f'not.used.{x}:{y}' if x == 0 or y == 0 else ' ' for y in range(4)] for x in range(4)]
+
+    def init_board(self):
+        self.ttt_board = [[f'not.used.{x}:{y}' if x == 0 or y == 0 else ' ' for y in range(4)] for x in range(4)]
+        return self.ttt_board
 
     @staticmethod
     def get_action(prompt):
@@ -34,7 +41,6 @@ class TicTacToe:
                 self.keyboard_input = self.keyboard_input[0] + self.keyboard_input[2]
             if self.keyboard_input[0] in '123' and self.keyboard_input[1] in '123':
                 if self.ttt_board[int(self.keyboard_input[0])][int(self.keyboard_input[1])] in 'XO':
-                    print('This cell is occupied! Choose another one!')
                     return False
                 return True
         if not str.isdigit(self.keyboard_input):
@@ -52,7 +58,9 @@ class TicTacToe:
 
     def get_coordinates(self):
         self.keyboard_input = 'None'
+        self.keyboard_input = self.get_action('Enter cells: >')
         while not self.coordinate_validation():
+            print('This cell is occupied! Choose another one!')
             self.keyboard_input = self.get_action('Enter cells: >')
         self.populate_coordinates()
 
@@ -105,7 +113,7 @@ class TicTacToe:
                 if ' ' in self.ttt_board[x][y]:
                     return 'Game not finished'
 
-        print('Draw')
+        return 'Draw'
 
     def make_move(self):
         print(f'Making move level "{self.level}"')
@@ -119,16 +127,44 @@ class TicTacToe:
                 self.keyboard_input = str(x) + str(y)
             self.ttt_board[x][y] = self.who_moves()
 
-    def main(self):
-        self.display_board()
-        self.get_move()
-        self.display_board()
+    def play_game(self):
         while self.determine_state() == 'Game not finished':
-            self.make_move()
             self.display_board()
-            self.get_move()
-            self.display_board()
-        print(self.determine_state())
+            if self.who_moves() == 'X' and self.player_x == 'easy':
+                self.make_move()
+                continue
+            elif self.who_moves() == 'X' and self.player_x == 'user':
+                self.get_move()
+                continue
+            elif self.who_moves() == 'O' and self.player_o == 'easy':
+                self.make_move()
+                continue
+            elif self.who_moves() == 'O' and self.player_o == 'user':
+                self.get_move()
+
+        self.display_board()
+
+    def menu_loop(self):
+        self.keyboard_input = 'None'
+        while self.keyboard_input[0] != 'exit':
+            self.keyboard_input = self.get_action('Input command: >')
+            self.keyboard_input = str.lower(self.keyboard_input)
+            self.keyboard_input = self.keyboard_input.split()
+            if self.keyboard_input[0] == 'start' and len(self.keyboard_input) == 3:
+                if self.keyboard_input[1] in tic_tac_toe.users and self.keyboard_input[2] in tic_tac_toe.users:
+                    self.player_x = self.keyboard_input[1]
+                    self.player_o = self.keyboard_input[2]
+            elif self.keyboard_input[0] == 'exit':
+                continue
+            else:
+                print('Bad parameters')
+                continue
+            self.init_board()
+            self.play_game()
+            print(self.determine_state())
+
+    def main(self):
+        self.menu_loop()
 
 
 tic_tac_toe = TicTacToe()
