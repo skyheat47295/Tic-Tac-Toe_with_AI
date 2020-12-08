@@ -1,27 +1,27 @@
 <h2 style="text-align: center;">Description</h2>
 
-<p>It is time to make some variations of the game possible. What if you want to play with a friend and not with AI? What if you get tired of playing the game and want to see a match between two AI? Finally, you need to be able to play either the first move or the second move playing against AI. </p>
+<p>It's time to make things more interesting by adding some game variations. What if you want to play against a friend instead of the AI? How about if you get tired of playing the game and want to see a match between two AIs? You also need to give the user the option of going first or second when playing against the AI. </p>
 
-<p>You should also be able to finish the game after receiving the result.</p>
+<p>It should be possible for the user to quit the game after the result is displayed as well.</p>
 
 <h2 style="text-align: center;">Objectives</h2>
 
-<p>Your tasks for this stage:</p>
+<p>Your tasks for this stage are:</p>
 
 <ol>
-	<li>Write a menu loop, which can interpret two commands: <code class="java">"start"</code> and <code class="java">"exit"</code>.</li>
-	<li>Implement the command <code class="java">"start"</code> , which should take two parameters: who will play <code class="java">X</code> and who will play <code class="java">O</code>. Two parameters are possible for now: <code class="java">"user"</code> to play as a human and <code class="java">"easy"</code> to play as an easy level AI.</li>
-	<li>The command <code class="java">"exit"</code> should simply terminate the program.</li>
+	<li>Write a menu loop, which can interpret two commands: <code class="java">start</code> and <code class="java">exit</code>.</li>
+	<li>Implement the command <code class="java">start</code>. It should take two parameters: who will play <code class="java">X</code> and who will play <code class="java">O</code>. Two options are possible for now: <code class="java">user</code> to play as a human, and <code class="java">easy</code> to play as an AI.</li>
+	<li>The <code class="java">exit</code> command should simply end the program.</li>
 </ol>
 
-<p>In the next steps, you will add "medium" and "hard" parameters.</p>
+<p>In later steps, you will add the <code class="java">medium</code> and <code class="java">hard</code> levels.</p>
 
-<p>Do not forget to handle incorrect input! Print <code class="java">"Bad parameters"</code> if something is wrong.</p>
+<p>Don't forget to handle incorrect input! The message <code class="java">Bad parameters!</code> should be displayed if what the user enters is invalid.</p>
 
 <h2 style="text-align: center;">Example</h2>
 
 <p>The example below shows how your program should work.<br>
-The greater-than symbol followed by space (<code class="java">&gt; </code>) represents the user input. Notice that it's not the part of the input.</p>
+The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
 
 <pre><code class="language-no-highlight">Input command: &gt; start
 Bad parameters!

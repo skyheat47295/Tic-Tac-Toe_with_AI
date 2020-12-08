@@ -1,57 +1,57 @@
 <h2 style="text-align: center;">Description</h2>
 
-<p>In this project, you'll write a game called Tic-Tac-Toe that you can play with your computer. The computer will have three levels of difficulty - easy, medium, hard.</p>
+<p>In this project, you'll write a game called Tic-Tac-Toe that you can play against your computer. The computer will have three levels of difficulty — easy, medium, and hard.</p>
 
-<p>But, for starters, let's write a program that knows how to work with coordinates and determine the state of the game.</p>
+<p>To begin with, let's write a program that knows how to work with coordinates and determine the state of the game.</p>
 
-<p>Suppose the bottom left cell has the coordinates (1, 1) and the top right cell has the coordinates (3, 3) like in this table:<br>
-<br>
-(1, 3) (2, 3) (3, 3)<br>
+<p>The bottom-left cell will have the coordinates (1, 1) and the top-right cell will have the coordinates (3, 3), as shown in this table:</p>
+
+<p>(1, 3) (2, 3) (3, 3)<br>
 (1, 2) (2, 2) (3, 2)<br>
 (1, 1) (2, 1) (3, 1)</p>
 
-<p>The program should ask to enter the coordinates where the user wants to make a move.</p>
+<p>The program should ask the user to enter the coordinates of the cell where they want to make a move.</p>
 
-<p>Keep in mind that the first coordinate goes from left to right and the second coordinate goes from bottom to top. Also, notice that coordinates start with 1 and can be 1, 2 or 3.</p>
+<p>Keep in mind that the first coordinate goes from left to right, and the second coordinate goes from bottom to top. Also, notice that coordinates start with 1 and can be 1, 2, or 3.</p>
 
-<p>But what if the user enters incorrect coordinates? The user could enter symbols instead of numbers or enter coordinates representing occupied cells. You need to prevent all of that by checking a user's input and catching possible exceptions.</p>
+<p>But what if the user attempts to enter invalid coordinates? This could happen if they try to enter letters or symbols instead of numbers, or the coordinates of an already occupied cell. Your program needs to prevent these things from happening by checking the user's input and catching possible exceptions.</p>
 
 <h2 style="text-align: center;">Objectives</h2>
 
 <p>The program should work in the following way:</p>
 
 <ol>
-	<li>Get the 3x3 field from the first input line (it contains 9 symbols containing <code class="java">X</code>, <code class="java">O</code> and <code class="java">_</code>, the latter means it's an empty cell),</li>
-	<li>Output this 3x3 field with cells before the user's move,</li>
-	<li>Then ask the user about his next move,</li>
-	<li>Then the user should input 2 numbers that represent the cell on which user wants to make his X or O. (9 symbols representing the field would be on the first line and these 2 numbers would be on the second line of the user input). Since the game always starts with X, if the number of X's and O's on the field is the same, the user should make a move with X, and if X's is one more than O's,  then the user should make a move with O.</li>
-	<li>Analyze user input and show messages in the following situations:<br>
-	•<code class="java">"This cell is occupied! Choose another one!"</code> - if the cell is not empty;<br>
-	•<code class="java">"You should enter numbers!"</code> - if the user enters other symbols;<br>
-	•<code class="java">"Coordinates should be from 1 to 3!"</code> - if the user goes beyond the field.</li>
-	<li>Then output the table including the user's most recent move.</li>
-	<li>Then output the state of the game.</li>
+	<li>Ask the user to provide the initial state of the 3x3 table with the first input line. This must include nine symbols that can be <code class="java">X</code>, <code class="java">O</code> or <code class="java">_</code> (the latter represents an empty cell).</li>
+	<li>Output the specified 3x3 table before the user makes a move.</li>
+	<li>Request that the user enters the coordinates of the move they wish to make.</li>
+	<li>The user then inputs two numbers representing the cell in which they wish to place their <code class="java">X</code> or <code class="java">O</code>. The game always starts with <code class="java">X</code>, so the user's move should be made with this symbol if there are an equal number of <code class="java">X</code>'s and <code class="java">O</code>'s in the table. If the table contains an extra <code class="java">X</code>, the move should be made with <code class="java">O</code>.</li>
+	<li>Analyze the user input and show messages in the following situations:<br>
+	• <code class="java">This cell is occupied! Choose another one!</code> — if the cell is not empty;<br>
+	• <code class="java">You should enter numbers!</code> — if the user tries to enter letters or symbols instead of numbers;<br>
+	• <code class="java">Coordinates should be from 1 to 3!</code> — if the user attempts to enter coordinates outside of the table's range.</li>
+	<li>Display the table again with the user's most recent move included.</li>
+	<li>Output the state of the game.</li>
 </ol>
 
-<p>Possible states:</p>
+<p>The possible states are:</p>
 
 <ul>
-	<li><code class="java">"Game not finished"</code> - when no side has a three in a row but the field has empty cells;</li>
-	<li><code class="java">"Draw"</code> - when no side has a three in a row and the field has no empty cells;</li>
-	<li><code class="java">"X wins"</code> - when the field has three X in a row;</li>
-	<li><code class="java">"O wins"</code> - when the field has three O in a row;</li>
+	<li><code class="java">Game not finished</code> — when no side has three in a row, but the table still has empty cells;</li>
+	<li><code class="java">Draw</code> — when no side has three in a row, and the table is complete;</li>
+	<li><code class="java">X wins</code> — when there are three <code class="java">X</code>'s in a row;</li>
+	<li><code class="java">O wins</code> — when there are three <code class="java">O</code>'s in a row.</li>
 </ul>
 
-<p>If the user input wrong coordinates, the program should keep asking until the user enters coordinate that represents an empty cell on the field and after that output the field with that move. You should output the field only 2 times - before the move and after a legal move.</p>
+<p>If the user provides invalid coordinates, the program should repeat the request until numbers that represent an empty cell on the table are supplied. You should ensure that the program only outputs the table twice — before the move and after the user makes a legal move.</p>
 
 <h2 style="text-align: center;">Examples</h2>
 
 <p>The examples below show how your program should work.<br>
-The greater-than symbol followed by space (<code class="java">&gt; </code>) represents the user input. Notice that it's not the part of the input.</p>
+The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
 
 <p><strong>Example 1:</strong></p>
 
-<pre><code class="language-no-highlight">Enter cells: &gt; _XXOO_OX_
+<pre><code class="language-no-highlight">Enter the cells: &gt; _XXOO_OX_
 ---------
 |   X X |
 | O O   |
@@ -75,7 +75,7 @@ X wins</code></pre>
 
 <p><strong>Example 2: </strong></p>
 
-<pre><code class="language-no-highlight">Enter cells: &gt; XX_XOXOO_
+<pre><code class="language-no-highlight">Enter the cells: &gt; XX_XOXOO_
 ---------
 | X X   |
 | X O X |
@@ -91,7 +91,7 @@ O wins</code></pre>
 
 <p><strong>Example 3: </strong></p>
 
-<pre><code class="language-no-highlight">Enter cells: &gt; OX_XOOOXX
+<pre><code class="language-no-highlight">Enter the cells: &gt; OX_XOOOXX
 ---------
 | O X   |
 | X O O |
@@ -107,7 +107,7 @@ Draw</code></pre>
 
 <p><strong>Example 4:</strong></p>
 
-<pre><code class="language-no-highlight">Enter cells: &gt;  _XO_OX___
+<pre><code class="language-no-highlight">Enter the cells: &gt;  _XO_OX___
 ---------
 |   X O |
 |   O X |

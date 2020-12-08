@@ -3,6 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/262969/additional_files.json
   is_template_based: false
   use_ide: true
+update_date: Tue, 08 Dec 2020 05:00:07 UTC
 stages:
 - id: 452
   step: 7439
@@ -93,7 +94,7 @@ topics:
     theory_id: 6972
   1:
   - title: IDE
-    theory_id: 3805
+    theory_id: 10996
   - title: Load module
     theory_id: 6019
   - title: Random module
@@ -119,8 +120,10 @@ topics:
     theory_id: 6031
   - title: Functional decomposition
     theory_id: 9571
-  - title: Operations with dictionary
+  - title: Dictionary methods
     theory_id: 9008
+  - title: Operations with dictionary
+    theory_id: 11096
   - title: Default arguments
     theory_id: 10295
   - title: Args

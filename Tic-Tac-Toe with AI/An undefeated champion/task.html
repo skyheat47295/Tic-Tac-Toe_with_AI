@@ -1,23 +1,21 @@
 <h2 style="text-align: center;">Description</h2>
 
-<p>Congratulations, you're at the finish line! After all, our task is to create an AI that will become a strong opponent.</p>
+<p>Congratulations, you've almost reached the finish line! To complete the task, it's now time to turn the AI into a strong opponent by adding a <code class="java">hard</code> difficulty level.</p>
 
-<p>Let's write the <code class="java">"hard"</code> level difficulty.</p>
+<p>Unlike <code class="java">medium</code>, when the AI is playing at <code class="java">hard</code> level, it doesn't just look one move ahead to see an immediate win or prevent an immediate loss. At this level, it can look two moves ahead, three moves ahead, and even further. It can calculate all possible moves that might be played during the game, and choose the best one based on the assumption that its opponent will also play perfectly. So, it doesn't rely on the mistakes of its opponent and plays the game without fault from start to finish regardless of the opponent's skill!</p>
 
-<p>Compared to the "medium" level difficulty, this level not just go one move ahead to see an immediate win or prevent an immediate loss. This level can see two moves ahead, three moves ahead and so on. Basically, it can see all possible outcomes till the end of the game and choose the best of them considering his opponent also would play perfectly. So, it doesn't rely on the blunders of the opponent, it plays perfectly regardless of the opponent's skill.</p>
-
-<p>The algorithm that implements this is called Minimax. This is the brute force algorithm that maximizes the value of the own position and minimizes the value of the opponent's position. It's not only an algorithm for Tic-Tac-Toe, but for every game with two players with alternate move order, for example, chess.</p>
+<p>The algorithm that implements this is called minimax. It's a brute force algorithm that maximizes the value of the AI's position and minimizes the worth of its opponent's. Minimax is not just for Tic-Tac-Toe. You can use it with any other game where two players make alternate moves, such as chess.</p>
 
 <h2 style="text-align: center;">Objectives</h2>
 
-<p>In the last stage you need to implement Minimax algorithm as the "hard" difficulty level. <a target="_blank" href="https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37" rel="nofollow noopener noreferrer">This</a> link will help to understand details.</p>
+<p>In this last stage, you need to implement the <code class="java">hard</code> difficulty level using the <a target="_blank" href="https://www.freecodecamp.org/news/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37/" rel="noopener noreferrer nofollow">minimax algorithm</a>.</p>
 
-<p>You also should add <code class="java">"hard"</code> parameter to be able to play against this level.</p>
+<p>You should also add a <code class="java">hard</code> parameter so that it's possible to play against this level.</p>
 
 <h2 style="text-align: center;">Example</h2>
 
 <p>The example below shows how your program should work.<br>
-The greater-than symbol followed by space (<code class="java">&gt; </code>) represents the user input. Notice that it's not the part of the input.</p>
+The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
 
 <pre><code class="language-no-highlight">Input command: &gt; start hard user
 Making move level "hard"
