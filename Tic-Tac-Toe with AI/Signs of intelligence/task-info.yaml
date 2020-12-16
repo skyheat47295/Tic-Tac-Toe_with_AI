@@ -204,6 +204,9 @@ files:
                              check_function=self.check_1) for _ in range(50)] + \
                    [TestCase(stdin="exit", check_function=self.final_check_medium)]
 
+        def check(self, reply, attach):
+            return CheckResult.wrong('You finished the program too early, input request was expected')
+
         # checking overlapping ###################################################
         def manual_test_2_1(self, output):
             tic_tac_toe_field: TicTacToeField = TicTacToeField.parse(output)
