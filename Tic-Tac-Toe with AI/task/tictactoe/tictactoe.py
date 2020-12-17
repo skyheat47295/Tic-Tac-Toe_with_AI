@@ -3,7 +3,7 @@ from random import randint
 
 class TicTacToe:
 
-    users = ['user', 'easy']
+    users = ['user', 'easy', 'medium']
 
     def __init__(self):
         self.valid_cells = 'XO_'
