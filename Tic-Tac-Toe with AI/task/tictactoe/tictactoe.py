@@ -51,7 +51,7 @@ class TicTacToe:
 
     def populate_coordinates(self):
         character_position = 0
-        for y in range(3, 0, -1):
+        for y in range(1, 4):  # y counts from top down (bottom up is (3,0 -1))
             for x in range(1, 4):
                 self.ttt_board[x][y] = self.keyboard_input[character_position]
                 character_position += 1
@@ -66,7 +66,7 @@ class TicTacToe:
 
     def display_board(self):
         print('---------')
-        for y in range(3, 0, -1):
+        for y in range(1, 4):  # y counts from top down (bottom up is (3,0 -1))
             print('| ', end='')
             for x in range(1, 4):
                 print(f'{self.ttt_board[x][y]} ', end='')
@@ -82,7 +82,7 @@ class TicTacToe:
     def who_moves(self):
         x_char = 0
         o_char = 0
-        for y in range(3, 0, -1):
+        for y in range(1, 4):  # y counts from top down (bottom up is (3,0 -1))
             for x in range(1, 4):
                 if self.ttt_board[x][y] == 'X':
                     x_char += 1
@@ -119,8 +119,15 @@ class TicTacToe:
         print(f'Making move level "{self.level}"')
         x = 0
         y = 0
-        if self.level == 'easy':
-            self.keyboard_input = 'None'
+        self.keyboard_input = 'None'
+
+        if self.level == 'medium':
+            while not self.move_validation():
+                x = randint(1, 3)
+                y = randint(1, 3)
+                self.keyboard_input = str(x) + str(y)
+            self.ttt_board[x][y] = self.who_moves()
+        elif self.level == 'easy':
             while not self.move_validation():
                 x = randint(1, 3)
                 y = randint(1, 3)
@@ -130,13 +137,21 @@ class TicTacToe:
     def play_game(self):
         while self.determine_state() == 'Game not finished':
             self.display_board()
-            if self.who_moves() == 'X' and self.player_x == 'easy':
+            if self.who_moves() == 'X':
+                if self.player_x == 'easy':
+                    self.level = 'easy'
+                elif self.player_x == 'medium':
+                    self.level = 'medium'
                 self.make_move()
                 continue
             elif self.who_moves() == 'X' and self.player_x == 'user':
                 self.get_move()
                 continue
-            elif self.who_moves() == 'O' and self.player_o == 'easy':
+            if self.who_moves() == 'O':
+                if self.player_o == 'easy':
+                    self.level = 'easy'
+                elif self.player_o == 'medium':
+                    self.level = 'medium'
                 self.make_move()
                 continue
             elif self.who_moves() == 'O' and self.player_o == 'user':
@@ -169,3 +184,4 @@ class TicTacToe:
 
 tic_tac_toe = TicTacToe()
 tic_tac_toe.main()
+#  print(tic_tac_toe.ttt_board)
