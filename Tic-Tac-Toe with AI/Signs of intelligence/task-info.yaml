@@ -325,5 +325,36 @@ files:
         TicTacToeTest('tictactoe.tictactoe').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/82/stages/455/implement
-status: Unchecked
+status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #53
+
+    The O was placed to a wrong position.The O symbol was not found (_ instead of it).
+
+    Please find below the output of your program during this failed test.
+    Note that the '>' character indicates the beginning of the input line.
+
+    ---
+
+    Input command: >> start user user
+    ---------
+    |       |
+    |       |
+    |       |
+    ---------
+    Enter the coordinates: >> 1 1
+    ---------
+    | X     |
+    |       |
+    |       |
+    ---------
+    Enter the coordinates: >> 2 3
+    ---------
+    | X     |
+    |       |
+    |   O   |
+    ---------
+    Enter the coordinates: >
+  time: Fri, 18 Dec 2020 06:32:55 UTC
 record: -1

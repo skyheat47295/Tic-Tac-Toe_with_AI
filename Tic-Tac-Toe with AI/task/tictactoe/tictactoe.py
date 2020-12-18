@@ -115,19 +115,49 @@ class TicTacToe:
 
         return 'Draw'
 
+    def medium_strategy(self):
+        for x_or_o in 'XO':
+            for x in range(1, 4):
+                if self.ttt_board[x][1] == x_or_o and self.ttt_board[x][2] == x_or_o and self.ttt_board[x][3] == ' ':
+                    self.ttt_board[x][3] = self.who_moves()
+                    return True
+                elif self.ttt_board[x][1] == ' ' and self.ttt_board[x][2] == x_or_o and self.ttt_board[x][3] == x_or_o:
+                    self.ttt_board[x][1] = self.who_moves()
+                    return True
+        for x_or_o in 'XO':
+            for y in range(1, 4):
+                if self.ttt_board[1][y] == x_or_o and self.ttt_board[2][y] == x_or_o and self.ttt_board[3][y] == ' ':
+                    self.ttt_board[3][y] = self.who_moves()
+                    return True
+                elif self.ttt_board[1][y] == ' ' and self.ttt_board[2][y] == x_or_o and self.ttt_board[3][y] == x_or_o:
+                    self.ttt_board[1][y] = self.who_moves()
+                    return True
+        for x_or_o in 'XO':
+            if self.ttt_board[1][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[3][3] == ' ':
+                self.ttt_board[3][3] = self.who_moves()
+                return True
+            elif self.ttt_board[1][1] == ' ' and self.ttt_board[2][2] == x_or_o and self.ttt_board[3][3] == x_or_o:
+                self.ttt_board[1][1] = self.who_moves()
+                return True
+        for x_or_o in 'XO':
+            if self.ttt_board[3][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[1][3] == ' ':
+                self.ttt_board[1][3] = self.who_moves()
+                return True
+            elif self.ttt_board[3][1] == ' ' and self.ttt_board[2][2] == x_or_o and self.ttt_board[1][3] == x_or_o:
+                self.ttt_board[3][1] = self.who_moves()
+                return True
+        return False
+
     def make_move(self):
         print(f'Making move level "{self.level}"')
         x = 0
         y = 0
         self.keyboard_input = 'None'
 
-        if self.level == 'medium':
-            while not self.move_validation():
-                x = randint(1, 3)
-                y = randint(1, 3)
-                self.keyboard_input = str(x) + str(y)
+        if self.level == 'medium' and self.medium_strategy():
             self.ttt_board[x][y] = self.who_moves()
-        elif self.level == 'easy':
+            return
+        else:
             while not self.move_validation():
                 x = randint(1, 3)
                 y = randint(1, 3)
@@ -140,22 +170,22 @@ class TicTacToe:
             if self.who_moves() == 'X':
                 if self.player_x == 'easy':
                     self.level = 'easy'
+                    self.make_move()
                 elif self.player_x == 'medium':
                     self.level = 'medium'
-                self.make_move()
-                continue
-            elif self.who_moves() == 'X' and self.player_x == 'user':
-                self.get_move()
+                    self.make_move()
+                elif self.player_x == 'user':
+                    self.get_move()
                 continue
             if self.who_moves() == 'O':
                 if self.player_o == 'easy':
                     self.level = 'easy'
+                    self.make_move()
                 elif self.player_o == 'medium':
                     self.level = 'medium'
-                self.make_move()
-                continue
-            elif self.who_moves() == 'O' and self.player_o == 'user':
-                self.get_move()
+                    self.make_move()
+                elif self.player_o == 'user':
+                    self.get_move()
 
         self.display_board()
 
