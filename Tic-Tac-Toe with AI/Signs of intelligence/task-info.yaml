@@ -238,7 +238,14 @@ files:
                 temp = self.manual_test_turns[self.turn]
                 return str(temp[0] + 1) + " " + str(temp[1] + 1)
 
-            field: TicTacToeField = TicTacToeField.parse(output)
+            fields: List[TicTacToeField] = TicTacToeField.parse_all(output)
+
+            if len(fields) != 1:
+                raise WrongAnswer("Cannot parse output. "
+                                  f"Expected 1 grid to be printed, found {len(fields)}")
+
+            field = fields[0]
+
             a, b = self.manual_test_turns[self.turn]
             if self.turn % 2 == 1:
                 mode = "x"
@@ -325,36 +332,5 @@ files:
         TicTacToeTest('tictactoe.tictactoe').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/82/stages/455/implement
-status: Failed
-feedback:
-  message: |-
-    Wrong answer in test #53
-
-    The O was placed to a wrong position.The O symbol was not found (_ instead of it).
-
-    Please find below the output of your program during this failed test.
-    Note that the '>' character indicates the beginning of the input line.
-
-    ---
-
-    Input command: >> start user user
-    ---------
-    |       |
-    |       |
-    |       |
-    ---------
-    Enter the coordinates: >> 1 1
-    ---------
-    | X     |
-    |       |
-    |       |
-    ---------
-    Enter the coordinates: >> 2 3
-    ---------
-    | X     |
-    |       |
-    |   O   |
-    ---------
-    Enter the coordinates: >
-  time: Tue, 22 Dec 2020 05:30:54 UTC
-record: -1
+status: Solved
+record: 4

@@ -244,7 +244,14 @@ files:
                 temp = self.manual_test_turns[self.turn]
                 return str(temp[0] + 1) + " " + str(temp[1] + 1)
 
-            field: TicTacToeField = TicTacToeField.parse(output)
+            fields: List[TicTacToeField] = TicTacToeField.parse_all(output)
+
+            if len(fields) != 1:
+                raise WrongAnswer("Cannot parse output. "
+                                  f"Expected 1 grid to be printed, found {len(fields)}")
+
+            field = fields[0]
+
             a, b = self.manual_test_turns[self.turn]
             if self.turn % 2 == 1:
                 mode = "x"
