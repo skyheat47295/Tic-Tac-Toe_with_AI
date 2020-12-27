@@ -1,9 +1,10 @@
 from random import randint
+import copy
 
 
 class TicTacToe:
 
-    users = ['user', 'easy', 'medium']
+    users = ['user', 'easy', 'medium', 'hard']
 
     def __init__(self):
         self.valid_cells = 'XO_'
@@ -123,14 +124,60 @@ class TicTacToe:
                 return True
         return False
 
+    def hard_strategy(self):
+        orig_board = copy.deepcopy(self.ttt_board)
+        #print(orig_board, 'orig board')
+        #print(self.ttt_board)
+
+        def minimax():
+            orig_who_moves = copy.deepcopy(self.who_moves())
+            best_coordinates = [0, 0, -1]
+            for y in range(1, 4):
+                for x in range(1, 4):
+                    self.ttt_board = copy.deepcopy(orig_board)
+                    self.keyboard_input = (str(x) + ' ' + str(y))
+                    if self.move_validation():
+                        self.ttt_board[x][y] = self.who_moves()
+                        #self.display_board()
+                        if self.determine_state() == (orig_who_moves + ' wins'):
+                            best_coordinates = [x, y, 10]
+                            return best_coordinates
+                        elif self.determine_state() == 'Draw' and best_coordinates[2] <= 0:
+                            best_coordinates = [x, y, 0]
+                            return best_coordinates
+                    else:
+                        self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
+                        best_coordinates = [0, 0, -1]
+                        # return minimax()
+
+            #print(best_coordinates)
+            return best_coordinates
+
+        new_x, new_y, rank = minimax()
+        self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
+        self.keyboard_input = 'None'  # zero out the x,y coordinates
+        #print(new_x, new_y, rank)
+        #print(orig_board, 'orig board')
+        #print(self.ttt_board)
+        if rank >= 0:
+            self.ttt_board[new_x][new_y] = self.who_moves()
+            return True
+        return False
+
     def make_move(self):
         print(f'Making move level "{self.level}"')
         x = 0
         y = 0
         self.keyboard_input = 'None'
 
+        if self.level == 'hard' and self.who_moves() == 'O' and \
+                self.ttt_board[2][2] == ' ':
+            self.ttt_board[2][2] = self.who_moves()  # second player takes center
+            return
         if self.level == 'medium' and self.medium_strategy():
-            self.ttt_board[x][y] = self.who_moves()
+            #  self.ttt_board[x][y] = self.who_moves()
+            return
+        elif self.level == 'hard' and self.hard_strategy():
             return
         else:
             while not self.move_validation():
@@ -149,6 +196,9 @@ class TicTacToe:
                 elif self.player_x == 'medium':
                     self.level = 'medium'
                     self.make_move()
+                elif self.player_x == 'hard':
+                    self.level = 'hard'
+                    self.make_move()
                 elif self.player_x == 'user':
                     self.get_move()
                 continue
@@ -158,6 +208,9 @@ class TicTacToe:
                     self.make_move()
                 elif self.player_o == 'medium':
                     self.level = 'medium'
+                    self.make_move()
+                elif self.player_o == 'hard':
+                    self.level = 'hard'
                     self.make_move()
                 elif self.player_o == 'user':
                     self.get_move()
@@ -189,4 +242,3 @@ class TicTacToe:
 
 tic_tac_toe = TicTacToe()
 tic_tac_toe.main()
-
