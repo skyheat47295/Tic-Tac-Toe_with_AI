@@ -23,16 +23,6 @@ class TicTacToe:
         keyboard_input = str.upper(input())
         return keyboard_input
 
-    def coordinate_validation(self):
-        if (len(self.keyboard_input)) == 9:
-            for character in self.keyboard_input:
-                if character in self.valid_cells:
-                    continue
-                else:
-                    return False
-            return True
-        return False
-
     def move_validation(self):
         if self.keyboard_input == 'None':
             return False
@@ -48,21 +38,6 @@ class TicTacToe:
             return False
         print('Coordinates should be from 1 to 3!')
         return False
-
-    def populate_coordinates(self):
-        character_position = 0
-        for y in range(1, 4):  # y counts from top down (bottom up is (3,0 -1))
-            for x in range(1, 4):
-                self.ttt_board[x][y] = self.keyboard_input[character_position]
-                character_position += 1
-
-    def get_coordinates(self):
-        self.keyboard_input = 'None'
-        self.keyboard_input = self.get_action('Enter cells: >')
-        while not self.coordinate_validation():
-            print('This cell is occupied! Choose another one!')
-            self.keyboard_input = self.get_action('Enter cells: >')
-        self.populate_coordinates()
 
     def display_board(self):
         print('---------')
@@ -214,4 +189,4 @@ class TicTacToe:
 
 tic_tac_toe = TicTacToe()
 tic_tac_toe.main()
-#  print(tic_tac_toe.ttt_board)
+
