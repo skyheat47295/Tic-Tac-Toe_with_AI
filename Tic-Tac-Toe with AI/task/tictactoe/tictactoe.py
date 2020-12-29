@@ -126,41 +126,43 @@ class TicTacToe:
 
     def hard_strategy(self):
         orig_board = copy.deepcopy(self.ttt_board)
-        #print(orig_board, 'orig board')
-        #print(self.ttt_board)
+        orig_who_moves = copy.deepcopy(self.who_moves())
+        #  print(orig_board, 'orig board')
+        #  print(self.ttt_board)
 
-        def minimax():
-            orig_who_moves = copy.deepcopy(self.who_moves())
-            best_coordinates = [0, 0, -1]
-            for y in range(1, 4):
-                for x in range(1, 4):
-                    self.ttt_board = copy.deepcopy(orig_board)
-                    self.keyboard_input = (str(x) + ' ' + str(y))
-                    if self.move_validation():
-                        self.ttt_board[x][y] = self.who_moves()
-                        #self.display_board()
-                        if self.determine_state() == (orig_who_moves + ' wins'):
-                            best_coordinates = [x, y, 10]
-                            return best_coordinates
-                        elif self.determine_state() == 'Draw' and best_coordinates[2] <= 0:
-                            best_coordinates = [x, y, 0]
-                            return best_coordinates
-                    else:
-                        self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
-                        best_coordinates = [0, 0, -1]
-                        # return minimax()
+        def minimax(x, y):
 
-            #print(best_coordinates)
+            best_coordinates = [0, 0, '']
+            self.keyboard_input = (str(x) + ' ' + str(y))
+            if self.move_validation():
+                self.ttt_board[x][y] = self.who_moves()
+                if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
+                    best_coordinates = [x, y, 'Win']
+                    return best_coordinates
+                elif self.determine_state() == 'Draw':
+                    best_coordinates = [x, y, 'Draw']
+                    return best_coordinates
+                elif 'wins' in self.determine_state():  # minimizer wins
+                    best_coordinates = [x, y, 'Lose']
+                    return best_coordinates
+
             return best_coordinates
 
-        new_x, new_y, rank = minimax()
+        for y in range(1, 4):
+            for x in range(1, 4):
+                self.keyboard_input = str(x) + str(y)
+                if self.move_validation():
+                    best_move = minimax(x, y)
+                    print('minimaxed regression board')
+                    self.display_board()
+                    print(best_move)
+                    self.ttt_board[x][y] = ' '
+                else:
+                    continue
         self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
         self.keyboard_input = 'None'  # zero out the x,y coordinates
-        #print(new_x, new_y, rank)
-        #print(orig_board, 'orig board')
-        #print(self.ttt_board)
-        if rank >= 0:
-            self.ttt_board[new_x][new_y] = self.who_moves()
+        if best_move[2]:
+            self.ttt_board[best_move[0]][best_move[1]] = self.who_moves()
             return True
         return False
 
@@ -170,10 +172,10 @@ class TicTacToe:
         y = 0
         self.keyboard_input = 'None'
 
-        if self.level == 'hard' and self.who_moves() == 'O' and \
-                self.ttt_board[2][2] == ' ':
-            self.ttt_board[2][2] = self.who_moves()  # second player takes center
-            return
+        #  if self.level == 'hard' and self.who_moves() == 'O' and \
+        #          self.ttt_board[2][2] == ' ':
+        #      self.ttt_board[2][2] = self.who_moves()  # second player takes center
+        #      return
         if self.level == 'medium' and self.medium_strategy():
             #  self.ttt_board[x][y] = self.who_moves()
             return
