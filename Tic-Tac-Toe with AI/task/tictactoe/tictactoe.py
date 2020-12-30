@@ -125,45 +125,60 @@ class TicTacToe:
         return False
 
     def hard_strategy(self):
-        orig_board = copy.deepcopy(self.ttt_board)
+        #  orig_board = copy.deepcopy(self.ttt_board)
         orig_who_moves = copy.deepcopy(self.who_moves())
+        best_move = [0, 0, 0]
         #  print(orig_board, 'orig board')
         #  print(self.ttt_board)
 
         def minimax(x, y):
+            score = 0
+            self.ttt_board[x][y] = self.who_moves()
+            if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
+                score += 1
+                return score
+            elif self.determine_state() == 'Draw':
+                score += 0
+                return score
+            elif 'wins' in self.determine_state():  # minimizer wins
+                score += -1
+                return score
+            #  else:
+            #    minimax(x, y)
 
-            best_coordinates = [0, 0, '']
-            self.keyboard_input = (str(x) + ' ' + str(y))
-            if self.move_validation():
-                self.ttt_board[x][y] = self.who_moves()
-                if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
-                    best_coordinates = [x, y, 'Win']
-                    return best_coordinates
-                elif self.determine_state() == 'Draw':
-                    best_coordinates = [x, y, 'Draw']
-                    return best_coordinates
-                elif 'wins' in self.determine_state():  # minimizer wins
-                    best_coordinates = [x, y, 'Lose']
-                    return best_coordinates
-
-            return best_coordinates
+            self.ttt_board[x][y] = ' '
+            return score
 
         for y in range(1, 4):
             for x in range(1, 4):
                 self.keyboard_input = str(x) + str(y)
                 if self.move_validation():
-                    best_move = minimax(x, y)
-                    print('minimaxed regression board')
-                    self.display_board()
-                    print(best_move)
-                    self.ttt_board[x][y] = ' '
+                    move = minimax(x, y)
+                    best_move[2] = max(best_move[2], move)
+                    best_move[0] = x
+                    best_move[1] = y
+        print(best_move)
+
+        """
+                    
+                    
+                    
+                    
+                    
+                    if self.determine_state() == 'Game not finished':
+                        if best_score:
+                            print('minimaxed regression board')
+                            self.display_board()
+                            print(best_score)
+                            self.ttt_board[x][y] = ' '
                 else:
                     continue
-        self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
+                #  self.ttt_board = copy.deepcopy(orig_board)  # put back the original board.
+                self.keyboard_input = 'None'  # zero out the x,y coordinates
+                if self.determine_state() == 'Game not finished':
+                    self.ttt_board[x][y] = self.who_moves()
+                    return True"""
         self.keyboard_input = 'None'  # zero out the x,y coordinates
-        if best_move[2]:
-            self.ttt_board[best_move[0]][best_move[1]] = self.who_moves()
-            return True
         return False
 
     def make_move(self):
