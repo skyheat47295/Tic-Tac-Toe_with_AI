@@ -194,7 +194,17 @@ class TicTacToe:
         elif self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
             self.ttt_board[2][2] = self.who_moves()  # always take center if available
             return True
-
+        elif 'X' not in self.ttt_board:  # always pick a corner to start
+            corner = randint(1, 4)
+            if corner == 1:
+                self.ttt_board[1][1] = 'X'
+            elif corner == 2:
+                self.ttt_board[3][1] = 'X'
+            elif corner == 3:
+                self.ttt_board[3][1] = 'X'
+            elif corner == 4:
+                self.ttt_board[3][3] = 'X'
+            return True
         for y in range(1, 4):
             for x in range(1, 4):
                 minimax()
