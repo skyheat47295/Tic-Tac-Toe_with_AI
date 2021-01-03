@@ -128,58 +128,81 @@ class TicTacToe:
         orig_board = copy.deepcopy(self.ttt_board)
         orig_who_moves = copy.deepcopy(self.who_moves())
         best_move = [0, 0, 0, 0]  # x, y, score, depth
-        orig_x = [0]
-        orig_y = [0]
+        best_move_ai = [0, 0, 0, 0]  # x, y, score, depth for inner loop
+        x = 1
+        y = 1
+        #  orig_x = [0]
+        #  orig_y = [0]
 
         def minimax():
 
-            def cleanup():
-                if best_move[3] == 0:  # finding the base case and making sure we're placing the correct xy pair
-                    best_move[0] = x
-                    best_move[1] = y
-                else:
-                    best_move[0] = orig_x[0]
-                    best_move[1] = orig_y[0]
-                    best_move[3] = 0
-                self.keyboard_input = 'None'
-                self.ttt_board = copy.deepcopy(orig_board)
+            def coord_calc():
+                #  if best_move[3] == 0:  # finding the base case and making sure we're placing the correct xy pair
+                best_move_ai[0] = x
+                best_move_ai[1] = y
+                #  else:
+                # best_move[0] = orig_x[0]
+                # best_move[1] = orig_y[0]
+                # self.keyboard_input = 'None'
 
-            for y in range(1, 4):
-                for x in range(1, 4):
-                    if best_move[3] == 0:
-                        orig_x[0] = x
-                        orig_y[0] = y
-                    self.keyboard_input = str(x) + str(y)
+            self.keyboard_input = str(x) + str(y)  # Starting Move
+            if self.move_validation():
+                # start of evil section
+                if not self.medium_strategy():
+                    self.ttt_board[x][y] = self.who_moves()
+                if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
+                    self.ttt_board[2][2] = self.who_moves()  # always take center if available
+                self.display_board()
+            for ai_y in range(1, 4):
+                for ai_x in range(1, 4):
+                    # if best_move[3] == 0:
+                    #    orig_x[0] = ai_x
+                    #    orig_y[0] = ai_y
+                    self.keyboard_input = str(ai_x) + str(ai_y)
                     if self.move_validation():
                         # start of evil section
                         if not self.medium_strategy():
-                            self.ttt_board[x][y] = self.who_moves()
+                            self.ttt_board[ai_x][ai_y] = self.who_moves()
+                        if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
+                            self.ttt_board[2][2] = self.who_moves()  # always take center if available
+                        # end of evil section
                         self.display_board()
                         if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
-                            cleanup()
-                            best_move[2] += 1
-                            continue
+                            coord_calc()
+                            best_move_ai[2] += 1
+                            break
                         elif self.determine_state() == 'Draw':
-                            cleanup()
-                            best_move[2] += 0
-                            continue
+                            coord_calc()
+                            best_move_ai[2] += 0
+                            break
                         elif 'wins' in self.determine_state():  # minimizer wins
-                            cleanup()
-                            best_move[2] += -1
-                            continue
+                            coord_calc()
+                            best_move_ai[2] += -1
+                            break
                         else:
-                            if best_move[3] == 0:
-                                orig_x[0] = x
-                                orig_y[0] = y
-                            best_move[3] += 1
+                            # if best_move[3] == 0:
+                            #     orig_x[0] = ai_x
+                            #     orig_y[0] = ai_y
+                            best_move_ai[3] += 1
                             minimax()
                             self.keyboard_input = 'None'
-                            continue
-            return best_move
+                            break
 
         if self.medium_strategy():
             return True
-        minimax()
+
+        for y in range(1, 4):
+            for x in range(1, 4):
+                minimax()
+                print(best_move, ' best move', best_move_ai, 'best move ai')
+                if best_move_ai[2] > best_move[2]:
+                    best_move = best_move_ai
+                best_move_ai = [0, 0, 0, 0]  # Reset best move counter
+                self.ttt_board = copy.deepcopy(orig_board)  # clear board for next test
+        self.ttt_board = copy.deepcopy(orig_board)
+        self.keyboard_input = 'None'
+
+        print(best_move, 'best move')
         if best_move[0] > 0 and best_move[2] >= 0:
             self.ttt_board[best_move[0]][best_move[1]] = self.who_moves()
             self.keyboard_input = 'None'  # zero out the x,y coordinates
@@ -195,9 +218,9 @@ class TicTacToe:
         if self.level == 'medium' and self.medium_strategy():
             return
         if self.level == 'hard':
-            if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
-                self.ttt_board[2][2] = self.who_moves()  # always take center if available
-                return
+            #  if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
+            #    self.ttt_board[2][2] = self.who_moves()  # always take center if available
+            #    return
             if self.hard_strategy():
                 return
         else:
