@@ -97,6 +97,9 @@ class TicTacToe:
                 if self.ttt_board[x][1] == x_or_o and self.ttt_board[x][2] == x_or_o and self.ttt_board[x][3] == ' ':
                     self.ttt_board[x][3] = self.who_moves()
                     return True
+                elif self.ttt_board[x][1] == x_or_o and self.ttt_board[x][2] == ' ' and self.ttt_board[x][3] == x_or_o:
+                    self.ttt_board[x][2] = self.who_moves()
+                    return True
                 elif self.ttt_board[x][1] == ' ' and self.ttt_board[x][2] == x_or_o and self.ttt_board[x][3] == x_or_o:
                     self.ttt_board[x][1] = self.who_moves()
                     return True
@@ -105,6 +108,9 @@ class TicTacToe:
                 if self.ttt_board[1][y] == x_or_o and self.ttt_board[2][y] == x_or_o and self.ttt_board[3][y] == ' ':
                     self.ttt_board[3][y] = self.who_moves()
                     return True
+                elif self.ttt_board[1][y] == x_or_o and self.ttt_board[2][y] == ' ' and self.ttt_board[3][y] == x_or_o:
+                    self.ttt_board[2][y] = self.who_moves()
+                    return True
                 elif self.ttt_board[1][y] == ' ' and self.ttt_board[2][y] == x_or_o and self.ttt_board[3][y] == x_or_o:
                     self.ttt_board[1][y] = self.who_moves()
                     return True
@@ -112,12 +118,18 @@ class TicTacToe:
             if self.ttt_board[1][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[3][3] == ' ':
                 self.ttt_board[3][3] = self.who_moves()
                 return True
+            elif self.ttt_board[1][1] == x_or_o and self.ttt_board[2][2] == ' ' and self.ttt_board[3][3] == x_or_o:
+                self.ttt_board[2][2] = self.who_moves()
+                return True
             elif self.ttt_board[1][1] == ' ' and self.ttt_board[2][2] == x_or_o and self.ttt_board[3][3] == x_or_o:
                 self.ttt_board[1][1] = self.who_moves()
                 return True
         for x_or_o in 'XO':
             if self.ttt_board[3][1] == x_or_o and self.ttt_board[2][2] == x_or_o and self.ttt_board[1][3] == ' ':
                 self.ttt_board[1][3] = self.who_moves()
+                return True
+            elif self.ttt_board[3][1] == x_or_o and self.ttt_board[2][2] == ' ' and self.ttt_board[1][3] == x_or_o:
+                self.ttt_board[2][2] = self.who_moves()
                 return True
             elif self.ttt_board[3][1] == ' ' and self.ttt_board[2][2] == x_or_o and self.ttt_board[1][3] == x_or_o:
                 self.ttt_board[3][1] = self.who_moves()
@@ -147,7 +159,8 @@ class TicTacToe:
                     self.ttt_board[x][y] = self.who_moves()
                 if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
                     self.ttt_board[2][2] = self.who_moves()  # always take center if available
-                self.display_board()
+                #  end of evil section
+                #  self.display_board()
             for ai_y in range(1, 4):
                 for ai_x in range(1, 4):
                     self.keyboard_input = str(ai_x) + str(ai_y)
@@ -158,7 +171,7 @@ class TicTacToe:
                         if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
                             self.ttt_board[2][2] = self.who_moves()  # always take center if available
                         # end of evil section
-                        self.display_board()
+                        #  self.display_board()
                         if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
                             coord_calc()
                             best_move_ai[2] += 1
@@ -185,15 +198,15 @@ class TicTacToe:
         for y in range(1, 4):
             for x in range(1, 4):
                 minimax()
-                print(best_move, ' best move', best_move_ai, 'best move ai')
-                if best_move_ai[2] >= best_move[2]:
+                #  print(best_move, ' best move', best_move_ai, 'best move ai')
+                if best_move_ai[2] > best_move[2]:
                     best_move = best_move_ai
                 best_move_ai = [0, 0, 0, 0]  # Reset best move counter
                 self.ttt_board = copy.deepcopy(orig_board)  # clear board for next test
         self.ttt_board = copy.deepcopy(orig_board)
         self.keyboard_input = 'None'
 
-        print(best_move, 'best move')
+        #  print(best_move, 'best move')
         if best_move[0] > 0 and best_move[2] >= 0:
             self.ttt_board[best_move[0]][best_move[1]] = self.who_moves()
             self.keyboard_input = 'None'  # zero out the x,y coordinates
@@ -210,6 +223,11 @@ class TicTacToe:
             return
         if self.level == 'hard' and self.hard_strategy():
             return
+
+        for corner in range(1, 4):
+            self.keyboard_input = str(x) + str(y)
+            if self.move_validation():
+                break
         while not self.move_validation():
             x = randint(1, 3)
             y = randint(1, 3)
