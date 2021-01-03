@@ -137,13 +137,8 @@ class TicTacToe:
         def minimax():
 
             def coord_calc():
-                #  if best_move[3] == 0:  # finding the base case and making sure we're placing the correct xy pair
                 best_move_ai[0] = x
                 best_move_ai[1] = y
-                #  else:
-                # best_move[0] = orig_x[0]
-                # best_move[1] = orig_y[0]
-                # self.keyboard_input = 'None'
 
             self.keyboard_input = str(x) + str(y)  # Starting Move
             if self.move_validation():
@@ -155,9 +150,6 @@ class TicTacToe:
                 self.display_board()
             for ai_y in range(1, 4):
                 for ai_x in range(1, 4):
-                    # if best_move[3] == 0:
-                    #    orig_x[0] = ai_x
-                    #    orig_y[0] = ai_y
                     self.keyboard_input = str(ai_x) + str(ai_y)
                     if self.move_validation():
                         # start of evil section
@@ -170,25 +162,24 @@ class TicTacToe:
                         if self.determine_state() == (orig_who_moves + ' wins'):  # maximizer wins
                             coord_calc()
                             best_move_ai[2] += 1
-                            break
+                            return
                         elif self.determine_state() == 'Draw':
                             coord_calc()
                             best_move_ai[2] += 0
-                            break
+                            return
                         elif 'wins' in self.determine_state():  # minimizer wins
                             coord_calc()
                             best_move_ai[2] += -1
-                            break
+                            return
                         else:
-                            # if best_move[3] == 0:
-                            #     orig_x[0] = ai_x
-                            #     orig_y[0] = ai_y
-                            best_move_ai[3] += 1
                             minimax()
                             self.keyboard_input = 'None'
-                            break
+                            return
 
         if self.medium_strategy():
+            return True
+        elif self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
+            self.ttt_board[2][2] = self.who_moves()  # always take center if available
             return True
 
         for y in range(1, 4):
@@ -218,9 +209,6 @@ class TicTacToe:
         if self.level == 'medium' and self.medium_strategy():
             return
         if self.level == 'hard':
-            #  if self.ttt_board[2][2] == ' ' and self.who_moves() == 'O':
-            #    self.ttt_board[2][2] = self.who_moves()  # always take center if available
-            #    return
             if self.hard_strategy():
                 return
         else:
