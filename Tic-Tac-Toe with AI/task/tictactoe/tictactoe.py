@@ -186,7 +186,7 @@ class TicTacToe:
             for x in range(1, 4):
                 minimax()
                 print(best_move, ' best move', best_move_ai, 'best move ai')
-                if best_move_ai[2] > best_move[2]:
+                if best_move_ai[2] >= best_move[2]:
                     best_move = best_move_ai
                 best_move_ai = [0, 0, 0, 0]  # Reset best move counter
                 self.ttt_board = copy.deepcopy(orig_board)  # clear board for next test
@@ -208,15 +208,13 @@ class TicTacToe:
 
         if self.level == 'medium' and self.medium_strategy():
             return
-        if self.level == 'hard':
-            if self.hard_strategy():
-                return
-        else:
-            while not self.move_validation():
-                x = randint(1, 3)
-                y = randint(1, 3)
-                self.keyboard_input = str(x) + str(y)
-            self.ttt_board[x][y] = self.who_moves()
+        if self.level == 'hard' and self.hard_strategy():
+            return
+        while not self.move_validation():
+            x = randint(1, 3)
+            y = randint(1, 3)
+            self.keyboard_input = str(x) + str(y)
+        self.ttt_board[x][y] = self.who_moves()
 
     def play_game(self):
         while self.determine_state() == 'Game not finished':
