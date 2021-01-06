@@ -9,9 +9,9 @@ class TicTacToe:
     def __init__(self):
         self.valid_cells = 'XO_'
         self.keyboard_input = ''
-        self.level = 'easy'
-        self.player_x = ''
-        self.player_o = ''
+        self.level = 'hard'
+        self.player_x = 'hard'
+        self.player_o = 'hard'
         self.ttt_board = [[f'not.used.{x}:{y}' if x == 0 or y == 0 else ' ' for y in range(4)] for x in range(4)]
 
     def init_board(self):
@@ -260,23 +260,41 @@ class TicTacToe:
         self.display_board()
 
     def menu_loop(self):
+        score_x = 0
+        score_o = 0
+        score_draw = 0
+        counter = 0
         self.keyboard_input = 'None'
-        while self.keyboard_input[0] != 'exit':
-            self.keyboard_input = self.get_action('Input command: >')
-            self.keyboard_input = str.lower(self.keyboard_input)
-            self.keyboard_input = self.keyboard_input.split()
-            if self.keyboard_input[0] == 'start' and len(self.keyboard_input) == 3:
-                if self.keyboard_input[1] in tic_tac_toe.users and self.keyboard_input[2] in tic_tac_toe.users:
-                    self.player_x = self.keyboard_input[1]
-                    self.player_o = self.keyboard_input[2]
-            elif self.keyboard_input[0] == 'exit':
-                continue
-            else:
-                print('Bad parameters')
-                continue
+
+        while counter <= 100:
+            """
+            while self.keyboard_input[0] != 'exit':
+                self.keyboard_input = self.get_action('Input command: >')
+                self.keyboard_input = str.lower(self.keyboard_input)
+                self.keyboard_input = self.keyboard_input.split()
+                if self.keyboard_input[0] == 'start' and len(self.keyboard_input) == 3:
+                    if self.keyboard_input[1] in tic_tac_toe.users and self.keyboard_input[2] in tic_tac_toe.users:
+                        self.player_x = self.keyboard_input[1]
+                        self.player_o = self.keyboard_input[2]
+                elif self.keyboard_input[0] == 'exit':
+                    continue
+                else:
+                    print('Bad parameters')
+                    continue
+            """
+
             self.init_board()
             self.play_game()
             print(self.determine_state())
+            if self.determine_state() == 'X wins':
+                score_x += 1
+            elif self.determine_state() == 'O wins':
+                score_o += 1
+            elif self.determine_state() == 'Draw':
+                score_draw += 1
+            counter += 1
+
+        print(f'X wins {score_x} O wins {score_o} Draws {score_draw}')
 
     def main(self):
         self.menu_loop()
